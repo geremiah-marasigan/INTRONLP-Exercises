@@ -5,10 +5,9 @@ str1len = len(str1)
 str2len = len(str2)
 
 array = [[[0 for z in range(2)] for x in range(str2len+1)] for y in range(str1len+1)]
-
-print(str(str1len))
-print(str(str2len))
-print(str(array[10][11]))
+print("Length of first word: " + str(str1len))
+print("Length of second word: " + str(str2len))
+# print(str(array[str1len][str2len]))
 
 for x in range(str1len+1):
     array[x][0][0] = x
@@ -21,6 +20,7 @@ num2 = 0
 num3 = 0
 
 for x in range(1,str1len+1):
+    print("{", end="")
     for y in range(1,str2len+1):
         if(str1[x-1] == str2[y-1]):
             num1 = array[x-1][y-1][0]
@@ -38,17 +38,19 @@ for x in range(1,str1len+1):
         else:
            array[x][y][0] = num3
            array[x][y][1] = 'D'
+        print('%3s' % str(array[x][y][0]) + ",", end=" ")
+    print("}")
+        
             
-print(array)
-print(array[10][11])
 
 x = str1len
 y = str2len
 path = []
 path.append(array[x][y])
 
-print(path)
+# print(path)
 
+#Back-Trace
 while(array[x][y][0] != 0 and array[x][y][1] != 0):
     num1 = array[x-1][y-1][0]
     num2 = array[x][y-1][0]
@@ -65,10 +67,14 @@ while(array[x][y][0] != 0 and array[x][y][1] != 0):
         path.append(array[x-1][y])
         x-=1
 
-print(path)
-print(len(path))
 
+print("VVVVVVVVVVVVVVVVVVVVVVVVV")
 
-
+print("Distance: " + str(len(path)))
+print("-----")
+print("Sammie")
+for f in path:
+    print(f[1], end = ", ")
+print("\nSammie")
 
     
