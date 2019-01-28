@@ -38,7 +38,37 @@ for x in range(1,str1len+1):
         else:
            array[x][y][0] = num3
            array[x][y][1] = 'D'
-        
             
 print(array)
 print(array[10][11])
+
+x = str1len
+y = str2len
+path = []
+path.append(array[x][y])
+
+print(path)
+
+while(array[x][y][0] != 0 and array[x][y][1] != 0):
+    num1 = array[x-1][y-1][0]
+    num2 = array[x][y-1][0]
+    num3 = array[x-1][y][0]
+
+    if (num1 <= num2) and (num1 <= num3):
+        path.append(array[x-1][y-1])
+        x-=1
+        y-=1
+    elif (num2 <= num1) and (num2 <= num3):
+        path.append(array[x][y-1])
+        y-=1
+    else:
+        path.append(array[x-1][y])
+        x-=1
+
+print(path)
+print(len(path))
+
+
+
+
+    
