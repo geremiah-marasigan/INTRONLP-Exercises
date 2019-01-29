@@ -1,5 +1,5 @@
 str1 = "Bugs Bunny"
-str2 = "Dig Chungus"
+str2 = "Big Chungus"
 
 str1len = len(str1)
 str2len = len(str2)
@@ -41,9 +41,7 @@ for x in range(1,str1len+1):
            array[x][y][0] = num3
            array[x][y][1] = 'D'
         print('%3s' % str(array[x][y][0]) + ",", end=" ")
-    print("}")
-        
-            
+    print("}")           
 
 x = str1len
 y = str2len
@@ -72,14 +70,17 @@ while(x > 1 and y > 1):
     num3 = check(array[x-1][y])
     
     if (num1 <= num2) and (num1 <= num3):
-        path.append(array[x-1][y-1][1])
+        path.append('M')
+        print(array[x-1][y-1])
         x-=1
         y-=1
     elif (num2 <= num1) and (num2 <= num3):
-        path.append(array[x][y-1][1])
+        path.append('I')
+        print(array[x][y-1])
         y-=1
     else:
-        path.append(array[x-1][y][1])
+        path.append('D')
+        print(array[x-1][y])
         x-=1
 
 print("VVVVVVVVVVVVVVVVVVVVVVVVV")
