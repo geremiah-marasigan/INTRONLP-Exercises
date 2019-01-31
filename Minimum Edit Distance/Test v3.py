@@ -1,7 +1,7 @@
 #Initial
-str1 = "Bugs Bunny"
+str1 = "ELEPHANT"
 #Target
-str2 = "Big Chungus"
+str2 = "RELEVANT"
 
 str1len = len(str1)
 str2len = len(str2)
@@ -84,7 +84,7 @@ while(x > 0 or y > 0):
     #print(array[x][y])
 
 print("-------------------------------")
-print("Distance: " + str(len(path)-1))
+print("Distance: " + str(array[str1len][str2len]))
 print("-------------------------------")
 initCharInd = 0
 targetCharInd = 0
