@@ -26,9 +26,9 @@ def minimum(str1, str2):
             if(str1[x-1] == str2[y-1]):
                 num1 = array[x-1][y-1]
             else:
-                num1 = array[x-1][y-1] + 2
-            num2 = array[x][y-1]+1
-            num3 = array[x-1][y]+1
+                num1 = array[x-1][y-1] + 2 #S
+            num2 = array[x][y-1]+1 #I
+            num3 = array[x-1][y]+0 #D
 
             if (num1 <= num2) and (num1 <= num3):
                array[x][y] = num1
@@ -38,19 +38,19 @@ def minimum(str1, str2):
                array[x][y] = num3      
 
     #Displaying table
-#    for x in range(len(array)):
-#        for y in range(len(array[x])):
-#          if(y == len(array[x])-1):
-#              if(array[x][y] < 10):
-#                  print(" "+str(array[x][y]),end = "")
-#              else:
-#                  print(array[x][y],end = "")
-#          else:
-#              if(array[x][y] < 10):
-#                  print(" "+str(array[x][y]),end = ", ")
-#              else:
-#                  print(array[x][y],end = ", ")
-#        print("") 
+    for x in range(len(array)):
+        for y in range(len(array[x])):
+          if(y == len(array[x])-1):
+              if(array[x][y] < 10):
+                  print(" "+str(array[x][y]),end = "")
+              else:
+                  print(array[x][y],end = "")
+          else:
+              if(array[x][y] < 10):
+                  print(" "+str(array[x][y]),end = ", ")
+              else:
+                  print(array[x][y],end = ", ")
+        print("") 
 
     x = str1len
     y = str2len
@@ -63,7 +63,7 @@ def minimum(str1, str2):
         else:
             num1 = array[x-1][y-1] + 2
         num2 = array[x][y-1]+1
-        num3 = array[x-1][y]+1
+        num3 = array[x-1][y]+0
 
         if (num1 <= num2) and (num1 <= num3):
             if(num1 > array[x-1][y-1]):
