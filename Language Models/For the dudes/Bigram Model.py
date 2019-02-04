@@ -10,8 +10,10 @@ directory = [
 #	"DLSU Student Publications",
 #	"Journal Articles"
 ]
+
 text_files = []
 term_counter = Counter()
+total_tokens = 0
 for folder in directory:
 	file_names = os.listdir(folder)
 
@@ -28,11 +30,12 @@ for folder in directory:
 			print("===%s===" % title)
 			print("Total tokens: %s" % len(temp['Tokens']))
 			print("Total vocabulary: %s" % len(temp['Vocabulary']))
-
+            
+			total_tokens += len(temp['Tokens'])
 			text_files.append(temp)
 			term_counter.update(temp['Tokens'])
 
-print("Identifying vocabulary...")
+print("---Identifying vocabulary...---")
 # Find vocabulary set
 total_vocabulary = set()
 for song in text_files:
@@ -40,4 +43,16 @@ for song in text_files:
 total_vocabulary = list(total_vocabulary)
 vocabulary_count = len(total_vocabulary)
 print("Vocabulary count: %s" % vocabulary_count)
+print("Grand Total Tokens in Corpus: %s" % total_tokens)
 print(total_vocabulary)
+
+dict = {}
+test = 0 #Should be equal to 1
+
+for vi in total_vocabulary:
+    dict[vi] = term_counter[vi]/total_tokens
+    test += dict[vi]
+
+print("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV")
+print(dict)
+print("This should be equal to 1 (or be close enough): " + str(test))
