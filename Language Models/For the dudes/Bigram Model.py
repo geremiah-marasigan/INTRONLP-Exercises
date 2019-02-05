@@ -149,7 +149,9 @@ for vi in all_tokens:
             bigram[vi] ={"<s>":1}
     last = vi
         
-print(bigram)
+for vi in bigram:
+    print(vi, end=": ")
+    print(bigram[vi])
 
 
 
