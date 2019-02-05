@@ -80,22 +80,78 @@ for folder in directory:
 
 print("---Identifying vocabulary...---")
 # Find vocabulary set
+all_tokens = []
 total_vocabulary = set()
 for song in text_files:
 	total_vocabulary |= set(song['Vocabulary'])
+	all_tokens = all_tokens + song['Tokens']
 total_vocabulary = list(total_vocabulary)
 vocabulary_count = len(total_vocabulary)
 print("Vocabulary count: %s" % vocabulary_count)
 print("Grand Total Tokens in Corpus: %s" % total_tokens)
 print(total_vocabulary)
 
-dict = {}
+#Unigram (Probability)
+uni = {}
 test = 0 #Should be equal to 1
 
 for vi in total_vocabulary:
-    dict[vi] = term_counter[vi]/total_tokens
-    test += dict[vi]
+    uni[vi] = term_counter[vi]/total_tokens
+    test += uni[vi]
 
 print("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV")
-print(dict)
+print(uni)
 print("This should be equal to 1 (or be close enough): " + str(test))
+
+#Raw Bigram Count
+print(all_tokens)
+print("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV")
+bigram = {}
+test = 0
+
+last = None
+
+#Bigram with single dict, comma separated
+#for vi in all_tokens:
+#    if last is not None:
+##        bigram[vi] = {last: 1}
+#        if "%s,%s" % (vi, last) in bigram:
+#            bigram["%s,%s" % (vi, last)] += 1 
+#        else:
+#            bigram["%s,%s" % (vi, last)] = 1
+#    else:
+##        bigram[vi]= {"<s>": 1}
+#        if "%s,%s" % (vi, "<s>") in bigram:
+#            bigram["%s,%s" % (vi, "<s>")] += 1
+#        else:
+#            bigram["%s,%s" % (vi, "<s>")] = 1
+#    last = vi
+
+#Bigram with nested dictionary
+for vi in all_tokens:
+    if last is not None:
+#        bigram[vi] = {last: 1}
+        if vi in bigram:
+            if last in bigram[vi]:
+                bigram[vi][last] += 1 
+            else:
+                bigram[vi][last] = 1
+        else:
+            bigram[vi] = {last: 1}
+    else:
+#        bigram[vi]= {"<s>": 1}
+        if vi in bigram:
+            if "<s>" in bigram[vi]:
+                bigram[vi]["<s>"] += 1 
+            else:
+                bigram[vi]["<s>"] = 1
+        else:
+            bigram[vi] ={"<s>":1}
+    last = vi
+        
+print(bigram)
+
+
+
+
+
