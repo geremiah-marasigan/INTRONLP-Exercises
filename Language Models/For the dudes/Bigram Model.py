@@ -1,6 +1,7 @@
 from collections import Counter
 import re
 import os
+import copy
 
 
 def minimum(str1, str2):
@@ -42,8 +43,10 @@ def minimum(str1, str2):
     return array[str1len][str2len]
 
 
-
-
+def print_bigram(x):
+    for vi in x:
+        print(vi, end=": ")
+        print(x[vi])
 
 print("Loading corpus...")
 re_pattern = r'\b[a-zA-Z0-9\-\'\*]+\b|[\.\?\!]'
@@ -109,7 +112,7 @@ print("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV")
 bigram = {}
 test = 0
 
-last = None
+last = ""
 
 #Bigram with single dict, comma separated
 #for vi in all_tokens:
@@ -128,8 +131,12 @@ last = None
 #    last = vi
 
 #Bigram with nested dictionary
+pattern = re.compile("[\.\?\!]") #End of sentence
+
+start_counter = 0
+
 for vi in all_tokens:
-    if last is not None:
+    if last != "" and not pattern.match(last):
 #        bigram[vi] = {last: 1}
         if vi in bigram:
             if last in bigram[vi]:
@@ -147,12 +154,26 @@ for vi in all_tokens:
                 bigram[vi]["<s>"] = 1
         else:
             bigram[vi] ={"<s>":1}
+        start_counter += 1
     last = vi
         
-for vi in bigram:
-    print(vi, end=": ")
-    print(bigram[vi])
+print_bigram(bigram)
 
+#bigram_probs = copy.deepcopy(bigram)
+
+for vi in bigram:
+    for val in bigram[vi]:
+        if val != "<s>":
+            bigram[vi][val] = bigram[vi][val]/term_counter[val]
+        else:
+            bigram[vi][val] = bigram[vi][val]/start_counter
+            
+print_bigram(bigram)
+
+print("---------------VALENTINES----------------------")
+print("Input a sentence: ", end="")
+x = input()
+print("next word is: ")
 
 
 
