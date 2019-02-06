@@ -41,10 +41,6 @@ def minimum(str1, str2):
 #    print("-------------------------------")
     return array[str1len][str2len]
 
-
-
-
-
 print("Loading corpus...")
 re_pattern = r'\b[a-zA-Z0-9\-\'\*]+\b|[\.\?\!]'
 directory = [
@@ -55,6 +51,7 @@ directory = [
 ]
 
 text_files = []
+all_tokens = []
 term_counter = Counter()
 total_tokens = 0
 for folder in directory:
@@ -69,16 +66,18 @@ for folder in directory:
 			}
 			temp['Tokens'] = re.findall(re_pattern, temp["Raw Text"].lower())
 			temp['Vocabulary'] = list(set(re.findall(re_pattern, temp["Raw Text"].lower())))
-			
+
 			print("===%s===" % title)
 			print("Total tokens: %s" % len(temp['Tokens']))
 			print("Total vocabulary: %s" % len(temp['Vocabulary']))
+			all_tokens+=temp['Tokens']
             
 			total_tokens += len(temp['Tokens'])
 			text_files.append(temp)
 			term_counter.update(temp['Tokens'])
 
 print("---Identifying vocabulary...---")
+print(all_tokens)
 # Find vocabulary set
 total_vocabulary = set()
 for song in text_files:
@@ -87,7 +86,7 @@ total_vocabulary = list(total_vocabulary)
 vocabulary_count = len(total_vocabulary)
 print("Vocabulary count: %s" % vocabulary_count)
 print("Grand Total Tokens in Corpus: %s" % total_tokens)
-print(total_vocabulary)
+#print(total_vocabulary)
 
 dict = {}
 test = 0 #Should be equal to 1
@@ -97,5 +96,5 @@ for vi in total_vocabulary:
     test += dict[vi]
 
 print("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV")
-print(dict)
+#print(dict)
 print("This should be equal to 1 (or be close enough): " + str(test))
