@@ -37,9 +37,6 @@ def minimum(str1, str2):
             else:
                array[x][y] = num3      
 
-#    print("-------------------------------")
-#    print("Distance: " + str(array[str1len][str2len]))
-#    print("-------------------------------")
     return array[str1len][str2len]
 
 
@@ -126,22 +123,6 @@ test = 0
 
 last = ""
 
-#Bigram with single dict, comma separated
-#for vi in all_tokens:
-#    if last is not None:
-##        bigram[vi] = {last: 1}
-#        if "%s,%s" % (vi, last) in bigram:
-#            bigram["%s,%s" % (vi, last)] += 1 
-#        else:
-#            bigram["%s,%s" % (vi, last)] = 1
-#    else:
-##        bigram[vi]= {"<s>": 1}
-#        if "%s,%s" % (vi, "<s>") in bigram:
-#            bigram["%s,%s" % (vi, "<s>")] += 1
-#        else:
-#            bigram["%s,%s" % (vi, "<s>")] = 1
-#    last = vi
-
 #Bigram with nested dictionary
 re_endofsentence = re.compile("[\.\?\!]") #End of sentence
 
@@ -171,7 +152,6 @@ for vi in all_tokens:
         
 print_bigram(bigram)
 
-#bigram_probs = copy.deepcopy(bigram)
 
 for vi in bigram:
     for val in bigram[vi]:
@@ -186,10 +166,10 @@ print("---------------IF YOU ARE READING THIS, I HOPE YOU HAVE A NICE DAY-------
 print("Input an incomplete sentence: ", end="")
 x = input()
 sentence = re.findall(re_pattern, x.lower())
-viv = sentence[len(sentence)-1]
+last_word = sentence[len(sentence)-1]
 
 
-print("next word is: " + find_nextword(bigram, viv))
+print("next word is: " + find_nextword(bigram, last_word))
 
 
 
