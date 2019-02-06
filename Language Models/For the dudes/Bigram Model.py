@@ -47,6 +47,18 @@ def print_bigram(x):
     for vi in x:
         print(vi, end=": ")
         print(x[vi])
+        
+def find_nextword(bigram, word):
+    maximum = 0
+    result = ""
+    for x in bigram:
+        if word in bigram[x]:
+            if bigram[x][word] >= maximum:
+                maximum = bigram[x][word]
+                result = x
+    return result
+                
+            
 
 print("Loading corpus...")
 re_pattern = r'\b[a-zA-Z0-9\-\'\*]+\b|[\.\?\!]'
@@ -131,12 +143,12 @@ last = ""
 #    last = vi
 
 #Bigram with nested dictionary
-pattern = re.compile("[\.\?\!]") #End of sentence
+re_endofsentence = re.compile("[\.\?\!]") #End of sentence
 
 start_counter = 0
 
 for vi in all_tokens:
-    if last != "" and not pattern.match(last):
+    if last != "" and not re_endofsentence.match(last):
 #        bigram[vi] = {last: 1}
         if vi in bigram:
             if last in bigram[vi]:
@@ -170,10 +182,14 @@ for vi in bigram:
             
 print_bigram(bigram)
 
-print("---------------VALENTINES----------------------")
-print("Input a sentence: ", end="")
+print("---------------IF YOU ARE READING THIS, I HOPE YOU HAVE A NICE DAY----------------------")
+print("Input an incomplete sentence: ", end="")
 x = input()
-print("next word is: ")
+sentence = re.findall(re_pattern, x.lower())
+viv = sentence[len(sentence)-1]
+
+
+print("next word is: " + find_nextword(bigram, viv))
 
 
 
