@@ -77,7 +77,7 @@ for folder in directory:
 			term_counter.update(temp['Tokens'])
 
 print("---Identifying vocabulary...---")
-print(all_tokens)
+#print(all_tokens)
 # Find vocabulary set
 total_vocabulary = set()
 for song in text_files:
@@ -87,7 +87,7 @@ vocabulary_count = len(total_vocabulary)
 print("Vocabulary count: %s" % vocabulary_count)
 print("Grand Total Tokens in Corpus: %s" % total_tokens)
 #print(total_vocabulary)
-
+    
 dict = {}
 test = 0 #Should be equal to 1
 
@@ -98,3 +98,24 @@ for vi in total_vocabulary:
 print("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV")
 #print(dict)
 print("This should be equal to 1 (or be close enough): " + str(test))
+print(all_tokens[len(all_tokens)-1])
+bigrams = []
+for x in range(len(all_tokens)-1):
+    bigrams.append(all_tokens[x] + " " + all_tokens[x+1])
+
+token_count = {}
+for token in all_tokens:
+    if(token in token_count):
+        token_count[token] +=1
+    else:
+        token_count[token] = 1
+
+bigram_count = {}
+for token in bigrams:
+    if(token in bigram_count):
+        bigram_count[token] +=1
+    else:
+        bigram_count[token] = 1
+
+
+
