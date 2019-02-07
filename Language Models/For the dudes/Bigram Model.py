@@ -98,7 +98,6 @@ for vi in total_vocabulary:
 print("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV")
 #print(dict)
 print("This should be equal to 1 (or be close enough): " + str(test))
-print(all_tokens[len(all_tokens)-1])
 bigrams = []
 for x in range(len(all_tokens)-1):
     bigrams.append(all_tokens[x] + " " + all_tokens[x+1])
@@ -117,17 +116,44 @@ for token in bigrams:
     else:
         bigram_count[token] = 1
 
-bigram_probability = {}
+bigram_prob = {}
 for vocab in total_vocabulary:
-    bigram_probability[vocab] = {}
+    bigram_prob[vocab] = {}
     count = token_count[vocab]
     listofpairs = []
     for token in bigram_count:
-        if(token.split(" ")[0] == vocab):
+        if(token.split(" ")[1] == vocab):
             listofpairs.append(token)
     for pair in listofpairs:
-        bigram_probability[vocab][pair.split(" ")[1]] = bigram_count[pair]/count
+        bigram_prob[vocab][pair.split(" ")[0]] = bigram_count[pair]/count
 
-print(bigram_probability)
+#print(bigram_prob)
+def guessNext(inp):
+    tempWords = {}
+    for x in bigram_prob:
+        if(inp in bigram_prob[x]):
+            for y in bigram_prob[x]:
+                if(y == inp):
+                    tempWords[x] = bigram_prob[x][y]
+
+    best = ""
+    bestNum = 0
+    for x in tempWords:
+        if(tempWords[x] > bestNum):
+            bestNum = tempWords[x]
+            best =  x
+    print(tempWords)
+    return best
+
+print("Enter a word: ",end="")
+inp = ""
+while(True):
+    word = input()
+    if(inp == "\exit"):
+        break
+    
+    inp +=" " + word + " " + guessNext(word)
+    print(inp,end=" ")
+
 
 
