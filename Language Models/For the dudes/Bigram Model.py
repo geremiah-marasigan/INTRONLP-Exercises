@@ -117,5 +117,17 @@ for token in bigrams:
     else:
         bigram_count[token] = 1
 
+bigram_probability = {}
+for vocab in total_vocabulary:
+    bigram_probability[vocab] = {}
+    count = token_count[vocab]
+    listofpairs = []
+    for token in bigram_count:
+        if(token.split(" ")[0] == vocab):
+            listofpairs.append(token)
+    for pair in listofpairs:
+        bigram_probability[vocab][pair.split(" ")[1]] = bigram_count[pair]/count
+
+print(bigram_probability)
 
 
