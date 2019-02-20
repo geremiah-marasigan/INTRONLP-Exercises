@@ -119,13 +119,12 @@ for token in bigrams:
 bigram_prob = {}
 for vocab in total_vocabulary:
     bigram_prob[vocab] = {}
-    count = token_count[vocab]
     listofpairs = []
     for token in bigram_count:
         if(token.split(" ")[1] == vocab):
             listofpairs.append(token)
     for pair in listofpairs:
-        bigram_prob[vocab][pair.split(" ")[0]] = bigram_count[pair]/count
+        bigram_prob[vocab][pair.split(" ")[0]] = bigram_count[pair]/token_count[pair.split(" ")[0]]
 
 #print(bigram_prob)
 def guessNext(inp):
@@ -146,13 +145,12 @@ def guessNext(inp):
     return best
 
 print("Enter a word: ",end="")
-inp = ""
-while(True):
-    word = input()
-    if(inp == "\exit"):
-        break
-    
-    inp +=" " + word + " " + guessNext(word)
+
+inp = input()
+
+for x in range(15):
+    word = inp.split(" ")[len(inp.split(" "))-1]
+    inp +=" " + guessNext(word)
     print(inp,end=" ")
 
 
