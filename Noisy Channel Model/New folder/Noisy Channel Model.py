@@ -58,6 +58,7 @@ for words in temp:
         confMatrix[word[0]] = word[1]
 
 "----- Methods -----"
+#finds the edit needed between the given word and the candidate word through minimum edit distance 
 def editMade(word1,word2):
         #edit is nothing
         if(word1 == word2):
@@ -139,17 +140,20 @@ def editMade(word1,word2):
                                                 if(path[x] == 'D'):
                                                         return str(word1[len(word1)-1-x]) + str(word2[x-1]) + "|" + str(word1[len(word1)-1-x])
 
+#gets the count of the edit from the confusion matrix and divides it by the number of times the candidate word appears in the corpus
 def getPxWord(word1,word2):
-        return float(confMatrix.get(editMade(word1,word2),0))/vocabulary_count
+        return float(confMatrix.get(editMade(word1,word2),0))/ unigram[word2]
 
+#gets the count of a word in corpus and divides it by the total number of unique words in corpus
 def getP(word):
         return unigram[word]/vocabulary_count
 
+#given a word returns the most likely word or the word itself if not an error or not in corpus
 def correction(word):
         correctWords = candidates(word)
         print(correctWords)
         if((word in correctWords and len(correctWords) == 1) or word in unigram):
-                return word
+                return [str(word),str(1)]
         PxWordPWord = {}
         for newWord in correctWords:
                 PxWordPWord[newWord] = getPxWord(word,newWord) * getP(newWord)
@@ -160,14 +164,17 @@ def correction(word):
                 if(PxWordPWord[key] > maxNum):
                         maxNum = PxWordPWord[key]
                         bestWord = key
-        return bestWord
+        return [str(bestWord),str(maxNum)]
 
+#gives a list of candidate words based on if the word exists in the corpus or if an edited version of the word exists in the corpus or if the word does not exist in the corpus
 def candidates(word): 
         return (known([word]) or known(edits(word)) or [word])
 
+#returns a set of all words that exist in corpus
 def known(words):
         return set(w for w in words if w in unigram)
 
+#returns every possible single edit for the provided word
 def edits(word):
         letters    = 'abcdefghijklmnopqrstuvwxyz'
         splits     = [(word[:i], word[i:])    for i in range(len(word) + 1)]
@@ -180,4 +187,7 @@ def edits(word):
 while(True):
         inp = input("Enter a Word: ")
         newWord = correction(inp)
-        print(str(newWord) + ": ("+str(unigram.get(newWord,'not in corpus'))+")")
+        if(newWord[0] not in unigram):
+                print(str(newWord[0]) + ": word not in corpus")
+        else:
+                print(str(newWord[0]) + ": ("+str(newWord[1])+")")
