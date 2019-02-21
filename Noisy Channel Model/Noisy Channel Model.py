@@ -129,18 +129,52 @@ def editMade(word1,word2):
                                         else:
                                                 path.append('D')
                                                 x-=1
+                                initCharInd = 0
+                                targetCharInd = 0
+                                initAlign = ""
+                                targetAlign = ""
+                                pathAlign = ""
+                                #Showing alignment (M = match, S = substitue, D = delete, I = insert)
+                                for f in reversed(path):
+                                        pathAlign+=f
+
+                                        if(f == "M" or f == 'S'):
+                                                initAlign+=word1[initCharInd]
+                                                targetAlign+=word2[targetCharInd]
+                                                initCharInd+=1
+                                                targetCharInd+=1
+                                        elif(f == "I"):
+                                                initAlign+="-"
+                                                targetAlign+=word2[targetCharInd]
+                                                targetCharInd+=1
+                                        else:
+                                                initAlign+=word1[initCharInd]
+                                                targetAlign+="-"
+                                                initCharInd+=1
                                 if(len(word1) < len(word2)):
-                                        for x in range(len(path)):
-                                                if(path[x] == 'I'):
-                                                    return str(word1[len(word1)-1-x]) + "|" + str(word1[len(word1)-1-x]) + str(word2[x-1])
+                                        for x in range(len(pathAlign)):
+                                                if(pathAlign[x] == 'I'):
+                                                        if(x-1 > -1):
+                                                                return str(targetAlign[x-1]) + "|" + str(targetAlign[x-1]) + str(targetAlign[x])
+                                                        else:
+                                                                return str(targetAlign[x+1]) + "|" + str(targetAlign[x]) + str(targetAlign[x+1])
                                 else:
                                         for x in range(len(path)):
-                                                if(path[x] == 'D'):
-                                                        return str(word1[len(word1)-1-x]) + str(word2[x-1]) + "|" + str(word1[len(word1)-1-x])
+                                                if(pathAlign[x] == 'D'):
+                                                        if(x-1 > -1):
+                                                                return str(initAlign[x-1]) + str(initAlign[x]) + "|" + str(initAlign[x-1])
+                                                        else:
+                                                                return str(initAlign[x]) + str(initAlign[x+1]) + "|" + str(initAlign[x+1])
+
+def getCharCount(char):
+        totalCount = 0
+        for key in unigram:
+                totalCount += key.count(char)
+        return totalCount
 
 #gets the count of the edit from the confusion matrix and divides it by the number of times the candidate word appears in the corpus
 def getPxWord(word1,word2):
-        return float(confMatrix.get(editMade(word1,word2),0))/ unigram[word2]
+        return float(confMatrix.get(editMade(word1,word2),0)) + 0.5/ getCharCount(editMade(word1,word2).split("|")[1])
 
 #gets the count of a word in corpus and divides it by the total number of unique words in corpus
 def getP(word):
