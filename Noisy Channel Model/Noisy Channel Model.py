@@ -4,10 +4,8 @@ import os
 
 re_pattern = r'\b[a-zA-Z0-9\-\'\*]+\b|[\.\?\!]'
 directory = [
-	"Joji's BALLAD Song Lyrics",
-	"Duturte's Speeches",
 	"DLSU Student Publications",
-	"Journal Articles"
+	"Norvig Corpus"
 ]
 
 all_tokens = []
