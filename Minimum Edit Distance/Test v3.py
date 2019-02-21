@@ -108,9 +108,4 @@ def minimum(str1, str2):
     print(pathAlign)
     print(targetAlign)
 
-minimum("naruto’s son", "boruto’s dad")
-minimum("kumakain", "kumain")
-minimum("levinstien", "levenshtein")
-minimum("leviathan", "levenshtein")
-minimum("ATGCATCCCATGAC", "TCTATATCCGT")
-minimum("AGGCTATCACCTGACCTCCAGGCCGATGCCCACCTGG", "TAGCTATCACGACCGCGGTCGATTTGCCCGACGGTCC")
+minimum("pi", "pip")
