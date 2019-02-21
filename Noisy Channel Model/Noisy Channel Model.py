@@ -93,8 +93,8 @@ def editMade(word1,word2):
                                         num1 = array[x-1][y-1]
                                 else:
                                         num1 = array[x-1][y-1] + 2 #S
-                                        num2 = array[x][y-1]+1 #I
-                                        num3 = array[x-1][y]+0 #D
+                                num2 = array[x][y-1]+1 #I
+                                num3 = array[x-1][y]+0 #D
 
                                 if (num1 <= num2) and (num1 <= num3):
                                         array[x][y] = num1
@@ -103,68 +103,85 @@ def editMade(word1,word2):
                                 else:
                                         array[x][y] = num3      
 
-                                x = str1len
-                                y = str2len
-                                path = []
-
-                                #Back-Trace
-                                while(x > 0 or y > 0):
-                                        if(word1[x-1] == word2[y-1]):
-                                                num1 = array[x-1][y-1]
+                #Displaying table
+                for x in range(len(array)):
+                        for y in range(len(array[x])):
+                                if(y == len(array[x])-1):
+                                        if(array[x][y] < 10):
+                                                print(" "+str(array[x][y]),end = "")
                                         else:
-                                                num1 = array[x-1][y-1] + 2
-                                        num2 = array[x][y-1]+1
-                                        num3 = array[x-1][y]+0
-
-                                        if (num1 <= num2) and (num1 <= num3):
-                                                if(num1 > array[x-1][y-1]):
-                                                        path.append('S')
-                                                else:
-                                                        path.append('M')
-                                                        x-=1
-                                                        y-=1
-                                        elif (num2 <= num1) and (num2 <= num3):
-                                                path.append('I')
-                                                y-=1
-                                        else:
-                                                path.append('D')
-                                                x-=1
-                                initCharInd = 0
-                                targetCharInd = 0
-                                initAlign = ""
-                                targetAlign = ""
-                                pathAlign = ""
-                                #Showing alignment (M = match, S = substitue, D = delete, I = insert)
-                                for f in reversed(path):
-                                        pathAlign+=f
-
-                                        if(f == "M" or f == 'S'):
-                                                initAlign+=word1[initCharInd]
-                                                targetAlign+=word2[targetCharInd]
-                                                initCharInd+=1
-                                                targetCharInd+=1
-                                        elif(f == "I"):
-                                                initAlign+="-"
-                                                targetAlign+=word2[targetCharInd]
-                                                targetCharInd+=1
-                                        else:
-                                                initAlign+=word1[initCharInd]
-                                                targetAlign+="-"
-                                                initCharInd+=1
-                                if(len(word1) < len(word2)):
-                                        for x in range(len(pathAlign)):
-                                                if(pathAlign[x] == 'I'):
-                                                        if(x-1 > -1):
-                                                                return str(targetAlign[x-1]) + "|" + str(targetAlign[x-1]) + str(targetAlign[x])
-                                                        else:
-                                                                return str(targetAlign[x+1]) + "|" + str(targetAlign[x]) + str(targetAlign[x+1])
+                                                print(array[x][y],end = "")
                                 else:
-                                        for x in range(len(path)):
-                                                if(pathAlign[x] == 'D'):
-                                                        if(x-1 > -1):
-                                                                return str(initAlign[x-1]) + str(initAlign[x]) + "|" + str(initAlign[x-1])
-                                                        else:
-                                                                return str(initAlign[x]) + str(initAlign[x+1]) + "|" + str(initAlign[x+1])
+                                        if(array[x][y] < 10):
+                                                print(" "+str(array[x][y]),end = ", ")
+                                        else:
+                                                print(array[x][y],end = ", ")
+                        print("") 
+
+                x = str1len
+                y = str2len
+                path = []
+
+                #Back-Trace
+                while(x > 0 or y > 0):
+                        print(x)
+                        print(y)
+                        if(word1[x-1] == word2[y-1]):
+                                num1 = array[x-1][y-1]
+                        else:
+                                num1 = array[x-1][y-1] + 2
+                        num2 = array[x][y-1]+1
+                        num3 = array[x-1][y]+0
+
+                        if (num1 <= num2) and (num1 <= num3):
+                                if(num1 > array[x-1][y-1]):
+                                        path.append('S')
+                                else:
+                                        path.append('M')
+                                        x-=1
+                                        y-=1
+                        elif (num2 <= num1) and (num2 <= num3):
+                                path.append('I')
+                                y-=1
+                        else:
+                                path.append('D')
+                                x-=1
+                initCharInd = 0
+                targetCharInd = 0
+                initAlign = ""
+                targetAlign = ""
+                pathAlign = ""
+                #Showing alignment (M = match, S = substitue, D = delete, I = insert)
+                for f in reversed(path):
+                        pathAlign+=f
+
+                        if(f == "M" or f == 'S'):
+                                initAlign+=word1[initCharInd]
+                                targetAlign+=word2[targetCharInd]
+                                initCharInd+=1
+                                targetCharInd+=1
+                        elif(f == "I"):
+                                initAlign+="-"
+                                targetAlign+=word2[targetCharInd]
+                                targetCharInd+=1
+                        else:
+                                initAlign+=word1[initCharInd]
+                                targetAlign+="-"
+                                initCharInd+=1
+                if(len(word1) < len(word2)):
+                        for x in range(len(pathAlign)):
+                                if(pathAlign[x] == 'I'):
+                                        if(x-1 > -1):
+                                                return str(targetAlign[x-1]) + "|" + str(targetAlign[x-1]) + str(targetAlign[x])
+                                        else:
+                                                return str(targetAlign[x+1]) + "|" + str(targetAlign[x]) + str(targetAlign[x+1])
+                else:
+                        for x in range(len(path)):
+                                if(pathAlign[x] == 'D'):
+                                        if(x-1 > -1):
+                                                return str(initAlign[x-1]) + str(initAlign[x]) + "|" + str(initAlign[x-1])
+                                        else:
+                                                return str(initAlign[x]) + str(initAlign[x+1]) + "|" + str(initAlign[x+1])
 
 def getCharCount(char):
         totalCount = 0
@@ -174,6 +191,7 @@ def getCharCount(char):
 
 #gets the count of the edit from the confusion matrix and divides it by the number of times the candidate word appears in the corpus
 def getPxWord(word1,word2):
+        print(word2)
         return float(confMatrix.get(editMade(word1,word2),0)) + 0.5/ getCharCount(editMade(word1,word2).split("|")[1])
 
 #gets the count of a word in corpus and divides it by the total number of unique words in corpus
