@@ -59,7 +59,7 @@ total_characters = 0
 for x in unigram:
     total_characters += len(x)
     
-print("Grand Total Characters in Vocabulary: %s" % total_tokens)
+print("Grand Total Characters in Vocabulary: %s" % total_characters)
 "----- Methods -----"
 #finds the edit needed between the given word and the candidate word through minimum edit distance 
 def editMade(word1,word2):
