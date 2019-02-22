@@ -221,5 +221,7 @@ while(True):
         newWord = correction(inp)
         if(newWord[0] not in unigram):
                 print(str(newWord[0]) + ": word not in corpus")
+        elif(newWord[1] == "1"):
+                print("No error!!")
         else:
                 print(str(newWord[0]) + ": ("+str(newWord[1])+")")
